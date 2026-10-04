@@ -1,5 +1,9 @@
 #!/usr/bin/env node
 // Synthetic application-metric generator for rehearsals; this is not an instrumented AI app.
+import { loadEnvFile } from './load-env.mjs';
+
+await loadEnvFile();
+
 const endpoint = process.env.OTLP_ENDPOINT || 'http://localhost:3000/v1/metrics';
 const authHeader = process.env.OTEL_AUTH_HEADER_VALUE || '';
 const intervalMs = Number(process.env.INTERVAL_MS || 5000);

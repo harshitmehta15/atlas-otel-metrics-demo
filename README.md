@@ -24,7 +24,7 @@ Open <http://localhost:3000>. The OTLP endpoint is `http://localhost:3000/v1/met
 Optionally, stream synthetic application signals continuously in another terminal (after `docker compose up`):
 
 ```sh
-OTEL_AUTH_HEADER_VALUE="Bearer local-demo-only-change-me" node scripts/generate-app-metrics.mjs
+node scripts/generate-app-metrics.mjs
 ```
 
 This emits changing request/model/retrieval latency, context-token, and error-rate gauges with `service.name=sample-ai-chat-app`. It is a synthetic sender for the presentation—not an AI app or real application instrumentation. Stop it with Ctrl+C.
@@ -58,20 +58,17 @@ Install the Node.js driver once from the project root:
 npm install
 ```
 
-Set your Atlas connection string in the terminal (keep it secret; do not commit it):
+Set your Atlas connection string in `.env` (keep it secret; do not commit it):
 
 ```sh
-export MONGODB_URI='mongodb+srv://<demo-user>:<password>@<cluster-host>/?retryWrites=true&w=majority'
-export DEMO_WORKLOAD_CONFIRM=YES
-node scripts/run-atlas-readonly-workload.mjs
+MONGODB_URI='mongodb+srv://<demo-user>:<password>@<cluster-host>/?retryWrites=true&w=majority'
+DEMO_WORKLOAD_CONFIRM=YES
 ```
 
-PowerShell equivalent:
+Then run:
 
-```powershell
-$env:MONGODB_URI='mongodb+srv://<demo-user>:<password>@<cluster-host>/?retryWrites=true&w=majority'
-$env:DEMO_WORKLOAD_CONFIRM='YES'
-node .\scripts\run-atlas-readonly-workload.mjs
+```sh
+node scripts/run-atlas-readonly-workload.mjs
 ```
 
 Defaults: 5 minutes, one small read cycle about every 4 seconds, hard maximum 30 minutes. Stop early with Ctrl+C. Optional controls are `DURATION_MINUTES` (1–30) and `INTERVAL_MS` (1,000–30,000); the script only permits `sample_mflix.movies`. Run this separately from the dashboard/Collector stack.

@@ -5,6 +5,9 @@
  * sends Atlas metrics to the demo receiver. This script does not send telemetry.
  */
 import { setTimeout as sleep } from 'node:timers/promises';
+import { loadEnvFile } from './load-env.mjs';
+
+await loadEnvFile();
 
 const uri = process.env.MONGODB_URI;
 const confirmation = process.env.DEMO_WORKLOAD_CONFIRM;
