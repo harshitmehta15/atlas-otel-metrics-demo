@@ -1,0 +1,17 @@
+{
+  "name": "atlas-otel-metrics-demo",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "A small OTLP metrics receiver and live dashboard for an Atlas observability meetup demo.",
+  "scripts": {
+    "start": "node server.mjs",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "mongodb": "^6.13.0"
+  }
+}

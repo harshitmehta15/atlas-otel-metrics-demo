@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#001e2b">
+  <title>Atlas OTel Metrics Sink — Demo Dashboard</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="leaf" aria-hidden="true">◆</span><span>MongoDB</span><span class="brand-divider">/</span><span class="product">Observability demo</span></div>
+    <div class="top-meta"><span class="eyebrow">MUG LIVE DEMO</span><span id="receiver-badge" class="status-pill status-waiting"><i></i><span>Checking receiver…</span></span></div>
+  </header>
+  <main class="shell">
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow green">ATLAS + OPENTELEMETRY</p>
+        <h1>See the database signals<br><em>behind your AI app.</em></h1>
+        <p class="lede">Atlas sends metrics over OTLP. This dashboard shows the latest samples received by the local OpenTelemetry Collector.</p>
+      </div>
+      <div class="hero-mark" aria-hidden="true"><span class="orb orb-one"></span><span class="orb orb-two"></span><span class="orb orb-three"></span><span class="orb-core">OTel</span></div>
+    </section>
+
+    <section class="notice-row">
+      <div id="data-notice" class="notice"><span class="notice-dot"></span><span>Waiting for metric samples. Configure an OTLP sender or generate clearly labeled synthetic data.</span></div>
+      <button id="refresh-button" class="button button-quiet" type="button">Refresh now</button>
+    </section>
+
+    <section id="access-panel" class="access-panel hidden" aria-live="polite">
+      <div><strong>Dashboard access</strong><p>Enter the dashboard token configured on the demo service. It stays in this browser tab.</p></div>
+      <div class="access-controls"><input id="dashboard-token" type="password" autocomplete="off" placeholder="Dashboard token"><button id="save-token" class="button button-dark" type="button">Unlock</button></div>
+    </section>
+
+    <section class="metrics-overview">
+      <div class="section-heading"><div><p class="eyebrow">LIVE VIEW</p><h2>Metric stream</h2></div><div id="last-updated" class="muted">Not updated yet</div></div>
+      <div class="stat-grid">
+        <article class="stat-card"><span class="stat-label">Metric series</span><strong id="series-count">—</strong><span class="stat-foot">Current Collector snapshot</span></article>
+        <article class="stat-card"><span class="stat-label">Collector</span><strong id="collector-state">Checking</strong><span class="stat-foot">OTLP/HTTP metrics receiver</span></article>
+        <article class="stat-card"><span class="stat-label">Refresh interval</span><strong>5 sec</strong><span class="stat-foot">Dashboard polling only</span></article>
+      </div>
+    </section>
+
+    <section class="chart-panel">
+      <div class="section-heading chart-heading"><div><p class="eyebrow">RECENT VALUES</p><h2>Metric over time</h2></div><label class="select-wrap"><span>Choose a series</span><select id="metric-select" aria-label="Choose metric series"><option value="">Waiting for metrics…</option></select></label></div>
+      <div id="chart-empty" class="empty-chart"><div class="empty-icon">↗</div><strong>No metric samples yet</strong><p>Connect Atlas or send an application metric to the OTLP endpoint. For local rehearsal, use the synthetic sample button below.</p></div>
+      <svg id="chart" class="chart hidden" viewBox="0 0 900 250" role="img" aria-label="Selected metric values over recent dashboard polls"></svg>
+      <div id="chart-caption" class="chart-caption">The dashboard keeps a short, in-browser history of polled values; it does not persist metrics.</div>
+    </section>
+
+    <section class="series-section">
+      <div class="section-heading"><div><p class="eyebrow">RECEIVED SERIES</p><h2>What the Collector sees</h2></div><span class="muted">Labels are intentionally not rendered.</span></div>
+      <div id="metric-list" class="metric-list"><div class="empty-list">No series received yet.</div></div>
+    </section>
+
+    <section class="lower-grid">
+      <article class="explain-card">
+        <p class="eyebrow green">HOW TO READ THIS</p><h2>Two sides of service health</h2>
+        <div class="compare-row"><div class="compare-icon app-icon">APP</div><div><strong>Application metrics</strong><p>Request rate, errors, latency, model-call duration, or token usage—emitted by an instrumented application.</p></div></div>
+        <div class="compare-row"><div class="compare-icon db-icon">DB</div><div><strong>Atlas metrics</strong><p>Database measurements—emitted by Atlas through the OTel Metrics Sink. They complement app signals; they do not automatically create request traces.</p></div></div>
+      </article>
+      <article class="setup-card">
+        <p class="eyebrow green">DEMO CONTROLS</p><h2>Send a test sample</h2>
+        <p>This sends synthetic OTLP metrics into the local Collector. It tests the dashboard pipeline, not your Atlas integration.</p>
+        <button id="seed-button" class="button button-green" type="button">Generate synthetic app + database sample</button>
+        <div id="seed-result" class="seed-result" aria-live="polite"></div>
+        <div class="endpoint-box"><span>OTLP/HTTP metrics path</span><code>/v1/metrics</code></div>
+      </article>
+    </section>
+
+    <footer><span>Demo receiver · OTLP/HTTP · OpenTelemetry Collector</span><span>Use a dedicated demo project and protect public endpoints.</span></footer>
+  </main>
+  <script type="module" src="/app.js"></script>
+</body>
+</html>

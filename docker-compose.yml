@@ -1,0 +1,12 @@
+services:
+  demo:
+    build: .
+    ports:
+      - "127.0.0.1:${PORT:-3000}:${PORT:-3000}"
+    environment:
+      PORT: "${PORT:-3000}"
+      NODE_ENV: "${NODE_ENV:-development}"
+      OTEL_AUTH_HEADER_VALUE: "${OTEL_AUTH_HEADER_VALUE:-Bearer local-demo-only-change-me}"
+      DASHBOARD_TOKEN: "${DASHBOARD_TOKEN:-}"
+      ENABLE_DEMO_SEED: "${ENABLE_DEMO_SEED:-true}"
+      MAX_OTLP_BODY_BYTES: "${MAX_OTLP_BODY_BYTES:-2097152}"
